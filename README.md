@@ -1,6 +1,7 @@
 
-# Gnome App-Grid Cleaner <!-- Look into if the name "App-grid" has a hypen or
-not -->
+# Gnome App-Grid Cleaner
+
+<!-- NOTE: Look into if App-Grid has a hyphen or not -->
 
 ---
 
