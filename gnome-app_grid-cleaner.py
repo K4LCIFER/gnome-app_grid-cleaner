@@ -9,10 +9,10 @@ parser = argparse.ArgumentParser()
 subparsers = parser.add_subparsers(dest='subcommand')
 
 parser_whitelist = subparsers.add_parser('whitelist')
-parser_whitelist.add_argument('--add', action='store', nargs='+')
-parser_whitelist.add_argument('--remove', action='store', nargs='+')
-parser_whitelist.add_argument('--list', action='store_true')
-parser_whitelist.add_argument('--discriminate', action='store_true')
+parser_whitelist.add_argument('--add', '-a', action='store', nargs='+')
+parser_whitelist.add_argument('--remove', '-r', action='store', nargs='+')
+parser_whitelist.add_argument('--list', '-l', action='store_true')
+parser_whitelist.add_argument('--discriminate', '-d', action='store_true')
 
 parser_clean = subparsers.add_parser('clean')
 
@@ -22,7 +22,15 @@ print(args)
 
 if args.subcommand == 'whitelist':
     if args.add:
-        pass
+        with open('whitelist', 'r+') as whitelist:
+            whitelist_content = whitelist.read()
+            print(whitelist_content)
+            for application_filename in args.add:
+                print(application_filename)
+                if application_filename in whitelist_content:
+                    print(application_filename + " is already whitelisted.")
+                elif application_filename not in whitelist_content: 
+                    whitelist.write(application_filename + '\n')
     elif args.remove:
         pass
     elif args.list:
