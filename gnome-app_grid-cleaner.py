@@ -2,6 +2,7 @@ import os
 import argparse
 
 
+gnome_application_directory = './test-directory'
 
 
 
@@ -23,13 +24,20 @@ print(args)
 if args.subcommand == 'whitelist':
     if args.add:
         with open('whitelist', 'r+') as whitelist:
-            whitelist_content = whitelist.read()
-            print(whitelist_content)
+        # 'r+' is for read and write, but the file pointer is placed at the
+        # beginning of the file. The following `read()` command will then put
+        # the file pointer at the end of the file.
+            whitelist_content = whitelist.read()    # Store whitelist contents
+            # Loop thuough all of the files that were specified in the command
             for application_filename in args.add:
-                print(application_filename)
+                # If the application filename is already within the whitelist, 
+                # then don't add it.
                 if application_filename in whitelist_content:
                     print(application_filename + " is already whitelisted.")
+                # If the application filename is not within the whitelist, then
+                # add it.
                 elif application_filename not in whitelist_content: 
+                    print("Added " + application_filename)
                     whitelist.write(application_filename + '\n')
     elif args.remove:
         pass
