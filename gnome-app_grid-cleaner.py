@@ -18,7 +18,6 @@
 
 
 
-# NOTE: Should I add Docstrings?
 import os
 import argparse
 import re
