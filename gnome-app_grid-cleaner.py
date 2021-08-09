@@ -25,7 +25,7 @@ import re
 DEFAULT_APPLICATION_DIRECTORY = './test-directory'
 
 
-
+# TODO: Need to add a help section to all of the commands
 parser = argparse.ArgumentParser()
 subparsers = parser.add_subparsers(dest='subcommand')
 
@@ -116,8 +116,10 @@ elif args.subcommand == 'clean':
                     # rewrite it to the file as true to hide the application.
                     if application_filename in whitelist_contents:
                         new_application_file.write('NoDisplay=false')
+                        print("Preserved " + application_filename)
                     else:
                         new_application_file.write('NoDisplay=true')
+                        print("Removed " + application_filename)
                     # new_application_file.seek(0)
                     # print(new_application_file.read())
             # Replace the original application file with the new version.
