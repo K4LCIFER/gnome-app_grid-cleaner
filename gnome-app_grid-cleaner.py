@@ -47,6 +47,7 @@ parser_whitelist.add_argument('--remove', '-r', action='store', nargs='+',
         help="Remove entries frome the whitelist")
 parser_whitelist.add_argument('--list', '-l', action='store_true',
         help="List all entries contained within the whitelist")
+# Not sure if this is needed just yet.
 # parser_whitelist.add_argument('--discriminate', '-d', action='store_true')
 
 parser_clean = subparsers.add_parser('clean', help="Apply the whitelist, and \
