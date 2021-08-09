@@ -22,20 +22,33 @@ import re
 
 
 
-DEFAULT_APPLICATION_DIRECTORY = './test-directory'
+# This is the directory for the Gnome App-Grid application files. By default, 
+# the directory is defined as `/usr/share/applications`; however, it can be 
+# modified to point to any directory.
+DEFAULT_APPLICATION_DIRECTORY = '/usr/share/applications'
 
 
-# TODO: Need to add a help section to all of the commands
 parser = argparse.ArgumentParser()
+# TODO: Perhaps look into verbosity level with verbose being not listed being
+#       equal to the minimum level of verbosity (ie quiet which is default).
+parser.add_argument('--verbose', '-v', action='store_true',
+        help="Display verbose command output.")
+
 subparsers = parser.add_subparsers(dest='subcommand')
 
-parser_whitelist = subparsers.add_parser('whitelist')
-parser_whitelist.add_argument('--add', '-a', action='store', nargs='+')
-parser_whitelist.add_argument('--remove', '-r', action='store', nargs='+')
-parser_whitelist.add_argument('--list', '-l', action='store_true')
+parser_whitelist = subparsers.add_parser('whitelist', 
+        help="Commands pertaining to the modification of the whitelist's \
+                contents.")
+parser_whitelist.add_argument('--add', '-a', action='store', nargs='+', 
+        help="Add entries to the whitelist.")
+parser_whitelist.add_argument('--remove', '-r', action='store', nargs='+',
+        help="Remove entries frome the whitelist")
+parser_whitelist.add_argument('--list', '-l', action='store_true',
+        help="List all entries contained within the whitelist")
 # parser_whitelist.add_argument('--discriminate', '-d', action='store_true')
 
-parser_clean = subparsers.add_parser('clean')
+parser_clean = subparsers.add_parser('clean', help="Apply the whitelist, and \
+        remove unwanted applications from the Gnome App-Grid")
 
 args = parser.parse_args()
 
@@ -55,17 +68,19 @@ if args.subcommand == 'whitelist':  # For modifying the whitelist.
                 # If the application filename is not within the whitelist, then
                 # add it.
                 elif application_filename not in whitelist_content: 
-                    print("Added " + application_filename)
                     whitelist.write(application_filename + '\n')
+                    if args.verbose:
+                        print("Added " + application_filename)
     elif args.remove:   # For removing entries from the whitelist.
         with open('whitelist', 'r') as original_whitelist:
             original_whitelist_contents = original_whitelist.read()
             original_whitelist.seek(0)  # Reset the file-pointer after reading.
             # Check if the requested application filename to be removed is
             # already absent from the whitelist. If so, raise a warning.
-            for application_filename in args.remove:
-                if application_filename not in original_whitelist_contents:
-                    print(application_filename + " is not whitelisted.")
+            if args.verbose:
+                for application_filename in args.remove:
+                    if application_filename not in original_whitelist_contents:
+                        print(application_filename + " is not whitelisted.")
             with open('new_whitelist', 'w') as new_whitelist:
                 # Go through the whitelist's contents, and only keep that which
                 # has not been requested to be removed.
@@ -76,7 +91,7 @@ if args.subcommand == 'whitelist':  # For modifying the whitelist.
                         new_whitelist.write(line)
                     # File is removed by simply not writing it to the new
                     # whitelist.
-                    elif line.strip("\n") in args.remove:
+                    elif (line.strip("\n") in args.remove) and args.verbose:
                         print('Removed ' + line.strip("\n"))
         # Update the whitelist file.
         os.remove('whitelist')
@@ -116,12 +131,12 @@ elif args.subcommand == 'clean':
                     # rewrite it to the file as true to hide the application.
                     if application_filename in whitelist_contents:
                         new_application_file.write('NoDisplay=false')
-                        print("Preserved " + application_filename)
+                        if args.verbose:
+                            print("Preserved " + application_filename)
                     else:
                         new_application_file.write('NoDisplay=true')
-                        print("Removed " + application_filename)
-                    # new_application_file.seek(0)
-                    # print(new_application_file.read())
+                        if args.verbose:
+                            print("Removed " + application_filename)
             # Replace the original application file with the new version.
             os.remove(DEFAULT_APPLICATION_DIRECTORY + '/'
                     + application_filename)
