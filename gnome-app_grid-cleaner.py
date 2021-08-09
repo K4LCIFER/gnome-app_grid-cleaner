@@ -12,6 +12,9 @@
     # along with this program.  If not, see <https://www.gnu.org/licenses/>.
     #
     # Copyright (c) 2021, Kalcifer
+    #
+    # For more information, see 
+    # https://github.com/K4LCIFER/gnome-app_grid-cleaner
 
 
 
