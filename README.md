@@ -36,3 +36,17 @@ whitelist, and then run the `clean` command.
     - List all entries in the whitelist.
 - `clean`
   - Clean the Gnome App-Grid, preserving those contained in the whitelist.
+
+## Future Versions
+
+An update to the way that applications are added to the whitelist.
+
+Currently it can be a rather arduous task to search for the file names of the
+app that one wishes to hide from the app grid. A future update could add a known
+list of file names associated with a program so that adding a program to the
+whitelist would be as easy as just typing the name of the program, instead of
+trying to track down the actual name of the application file that one wishes to
+hide from the app grid. A future update could add a known list of file names
+associated with a program so that adding a program to the whitelist would be as
+easy as just typing the name of the program, instead of trying  to track down
+the actual name of the application file.
