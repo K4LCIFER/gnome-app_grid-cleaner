@@ -189,7 +189,5 @@ def main():
                     DEFAULT_APPLICATION_DIRECTORY + '/' + application_filename,
                 )
 
-yneooeny oenyoenyneyeyoeneyeyoneyoyoeneyneoyneoyneoyneonoyeonynoe
-
 if __name__ == "__main__":
     main()
