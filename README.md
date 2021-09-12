@@ -15,9 +15,9 @@ application from the Gnome App-Grid.
 
 ## Usage
 
-To use this script simply add the applications, found in
-`/usr/share/applications`, that you want to keep in your App-Grid to the
-whitelist, and then run the `clean` command.
+To use this script, simply add the applications that you wish to have displayed
+in the Gnome App-Grid to the whitelist using the `whitelist` subcommnad, and
+then run the `clean` command to hide the unwanted applications.
 
 > **NOTE:** You may need to run the program as root (i.e. run it with `sudo`) as
 `/usr/share/applications` is typically a protected directory.
@@ -29,7 +29,8 @@ whitelist, and then run the `clean` command.
 - `whitelist`
   - Commands pertaining to the management of the whitelist.
   - `--add`, `-a`
-    - Add an entry to the whitelist.
+    - Add an entry to the whitelist. If the whitelist doesn't exist, then it
+      will be created.
   - `--remove`, `-r`
     - Remove an entry from the whitelist.
   - `--list`, `-l`
